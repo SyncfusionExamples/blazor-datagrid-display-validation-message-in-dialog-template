@@ -19,48 +19,43 @@
                     <ValidationMessage For="() => Order.OrderID" />
                     <ValidationMessage For="() => Order.OrderDate" />
                     <ValidationMessage For="() => Order.CustomerID" />
+                    <ValidationMessage For="() => Order.Freight" />
                     <ValidationMessage For="() => Order.ShipCountry" />
+                    <ValidationMessage For="() => Order.ShipCity" />
                     <ValidationMessage For="() => Order.ShipAddress" />
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label class="e-float-text e-label-top">Order ID</label>
-                            <SfNumericTextBox ID="OrderID" @bind-Value="@(Order.OrderID)" Enabled="@((Order.OrderID == null) ? true : false)"></SfNumericTextBox>
+                            <SfNumericTextBox ID="OrderID" @bind-Value="@(Order.OrderID)" Enabled="@((Order.OrderID == 0) ? true : false)" FloatLabelType="FloatLabelType.Always" Placeholder="Order ID"></SfNumericTextBox>
                         </div>
                         <div class="form-group col-md-6">
-                            <label class="e-float-text e-label-top">Customer Name</label>
-                            <SfAutoComplete ID="customerID" TItem="OrdersDetails" @bind-Value="@(Order.CustomerID)" TValue="string" DataSource="@GridData">
+                            <SfAutoComplete ID="CustomerID" TItem="OrdersDetails" @bind-Value="@(Order.CustomerID)" TValue="string" DataSource="@GridData" FloatLabelType="FloatLabelType.Always" Placeholder="Customer Name">
                                 <AutoCompleteFieldSettings Value="CustomerID"></AutoCompleteFieldSettings>
                             </SfAutoComplete>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label class="e-float-text e-label-top">Freight</label>
-                            <SfNumericTextBox ID="Freight" @bind-Value="@(Order.Freight)" TValue="double?"></SfNumericTextBox>
+                            <SfNumericTextBox ID="Freight" @bind-Value="@(Order.Freight)" TValue="double?" FloatLabelType="FloatLabelType.Always" Placeholder="Freight"></SfNumericTextBox>
                         </div>
                         <div class="form-group col-md-6">
-                            <label class="e-float-text e-label-top">Order Date</label>
-                            <SfDatePicker ID="OrderDate" @bind-Value="@(Order.OrderDate)"></SfDatePicker>
+                            <SfDatePicker ID="OrderDate" @bind-Value="@(Order.OrderDate)" FloatLabelType="FloatLabelType.Always" Placeholder="Order Date"></SfDatePicker>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label class="e-float-text e-label-top">Ship Country</label>
-                            <SfDropDownList ID="ShipCountry" @bind-Value="@(Order.ShipCountry)" TItem="OrdersDetails" TValue="string" DataSource="@GridData">
+                            <SfDropDownList ID="ShipCountry" @bind-Value="@(Order.ShipCountry)" TItem="Country" TValue="string" DataSource="@CountryName" FloatLabelType="FloatLabelType.Always" Placeholder="Ship Country">
                                 <DropDownListFieldSettings Value="ShipCountry" Text="ShipCountry"></DropDownListFieldSettings>
                             </SfDropDownList>
                         </div>
                         <div class="form-group col-md-6">
-                            <label class="e-float-text e-label-top">Ship City</label>
-                            <SfDropDownList ID="ShipCity" @bind-Value="@(Order.ShipCity)" TItem="OrdersDetails" TValue="string" DataSource="@GridData">
+                            <SfDropDownList ID="ShipCity" @bind-Value="@(Order.ShipCity)" TItem="City" TValue="string" DataSource="@CityName" FloatLabelType="FloatLabelType.Always" Placeholder="Ship City">
                                 <DropDownListFieldSettings Value="ShipCity" Text="ShipCity"></DropDownListFieldSettings>
                             </SfDropDownList>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-12">
-                            <label class="e-float-text e-label-top">Ship Address</label>
-                            <SfTextBox ID="ShipAddress" @bind-Value="@(Order.ShipAddress)"></SfTextBox>
+                            <SfTextBox ID="ShipAddress" Multiline="true" @bind-Value="@(Order.ShipAddress)" FloatLabelType="FloatLabelType.Always" Placeholder="Ship Address"></SfTextBox>
                         </div>
                     </div>
                 </div>
@@ -76,56 +71,34 @@
     </GridColumns>
 </SfGrid>
 
-@* <style>
-    .form-group {
-        margin-bottom: 1rem;
-    }
-
-    .form-inline .form-control {
-        display: inline-block;
-        width: auto;
-        vertical-align: middle;
-    }
-
-    .form-row {
-        display: flex;
-        flex-wrap: wrap;
-        margin-right: -5px;
-        margin-left: -5px;
-    }
-
-        .form-row > .col {
-            padding-left: 5px;
-            padding-right: 5px;
-        }
-
-    label {
-        margin-bottom: 0.5rem;
-    }
-</style> *@
-
 @code {
+
     public List<OrdersDetails> GridData = new List<OrdersDetails>
     {
-        new OrdersDetails() { OrderID = 10248, CustomerID = "VINET", Freight = 32.38, ShipCity = "Berlin", OrderDate = DateTime.Now.AddDays(-2), ShipName = "Vins et alcools Chevalier", ShipCountry = "Denmark", ShipAddress = "Kirchgasse 6" },
-        new OrdersDetails() { OrderID = 10249, CustomerID = "TOMSP", Freight = 11.61, ShipCity = "Madrid", OrderDate = DateTime.Now.AddDays(-5), ShipName = "Toms Spezialitäten", ShipCountry = "Brazil", ShipAddress = "Avda. Azteca 123" },
-        new OrdersDetails() { OrderID = 10250, CustomerID = "HANAR", Freight = 65.83, ShipCity = "Cholchester", OrderDate = DateTime.Now.AddDays(-12), ShipName = "Hanari Carnes", ShipCountry = "Germany", ShipAddress = "Carrera 52 con Ave. Bolívar #65-98 Llano Largo" },
-        new OrdersDetails() { OrderID = 10251, CustomerID = "VICTE", Freight = 41.34, ShipCity = "Marseille", OrderDate = DateTime.Now.AddDays(-18), ShipName = "Victuailles en stock", ShipCountry = "Austria", ShipAddress = "Magazinweg 7" },
-        new OrdersDetails() { OrderID = 10252, CustomerID = "SUPRD", Freight = 51.3, ShipCity = "Tsawassen", OrderDate = DateTime.Now.AddDays(-22), ShipName = "Suprêmes délices", ShipCountry = "Switzerland", ShipAddress = "1029 - 12th Ave. S." },
-        new OrdersDetails() { OrderID = 10253, CustomerID = "HANAR", Freight = 58.17, ShipCity = "Tsawassen", OrderDate = DateTime.Now.AddDays(-26), ShipName = "Hanari Carnes", ShipCountry = "Switzerland", ShipAddress = "1029 - 12th Ave. S." },
-        new OrdersDetails() { OrderID = 10254, CustomerID = "CHOPS", Freight = 22.98, ShipCity = "Berlin", OrderDate = DateTime.Now.AddDays(-34), ShipName = "Chop-suey Chinese", ShipCountry = "Denmark", ShipAddress = "Kirchgasse 6" },
-        new OrdersDetails() { OrderID = 10255, CustomerID = "RICSU", Freight = 148.33, ShipCity = "Madrid", OrderDate = DateTime.Now.AddDays(-39), ShipName = "Richter Supermarket", ShipCountry = "Brazil", ShipAddress = "Avda. Azteca 123" },
-        new OrdersDetails() { OrderID = 10256, CustomerID = "WELLI", Freight = 13.97, ShipCity = "Madrid", OrderDate = DateTime.Now.AddDays(-43), ShipName = "Wellington Importadora", ShipCountry = "Brazil", ShipAddress = "Avda. Azteca 123" },
-        new OrdersDetails() { OrderID = 10257, CustomerID = "HILAA", Freight = 81.91, ShipCity = "Cholchester", OrderDate = DateTime.Now.AddDays(-48), ShipName = "HILARION-Abastos", ShipCountry = "Germany", ShipAddress = "Carrera 52 con Ave. Bolívar #65-98 Llano Largo" }
+        new OrdersDetails() { OrderID = 10248, CustomerID = "VINET", Freight = 32.38, ShipCity = "Reims", OrderDate = new DateTime(1996, 7, 4), ShipName = "Vins et alcools Chevalier", ShipCountry = "France", ShipAddress = "59 rue de l Abbaye" },
+        new OrdersDetails() { OrderID = 10249, CustomerID = "TOMSP", Freight = 11.61, ShipCity = "Münster", OrderDate = new DateTime(1996, 7, 5), ShipName = "Toms Spezialitäten", ShipCountry = "Germany", ShipAddress = "Luisenstr. 48" },
+        new OrdersDetails() { OrderID = 10250, CustomerID = "HANAR", Freight = 65.83, ShipCity = "Rio de Janeiro", OrderDate = new DateTime(1996, 7, 8), ShipName = "Hanari Carnes", ShipCountry = "Brazil", ShipAddress = "Rua do Paço, 67" },
+        new OrdersDetails() { OrderID = 10251, CustomerID = "VICTE", Freight = 41.34, ShipCity = "Lyon", OrderDate = new DateTime(1996, 7, 8), ShipName = "Victuailles en stock", ShipCountry = "France", ShipAddress = "2, rue du Commerce" },
+        new OrdersDetails() { OrderID = 10252, CustomerID = "SUPRD", Freight = 51.3, ShipCity = "Charleroi", OrderDate = new DateTime(1996, 7, 9), ShipName = "Suprêmes délices", ShipCountry = "Belgium", ShipAddress = "Boulevard Tirou, 255" },
+        new OrdersDetails() { OrderID = 10253, CustomerID = "HANAR", Freight = 58.17, ShipCity = "Rio de Janeiro", OrderDate = new DateTime(1996, 7, 10), ShipName = "Hanari Carnes", ShipCountry = "Brazil", ShipAddress = "Rua do Paço, 67" },
+        new OrdersDetails() { OrderID = 10254, CustomerID = "CHOPS", Freight = 22.98, ShipCity = "Bern", OrderDate = new DateTime(1996, 7, 11), ShipName = "Chop-suey Chinese", ShipCountry = "Switzerland", ShipAddress = "Hauptstr. 31" },
+        new OrdersDetails() { OrderID = 10255, CustomerID = "RICSU", Freight = 148.33, ShipCity = "Genève", OrderDate = new DateTime(1996, 7, 12), ShipName = "Richter Supermarkt", ShipCountry = "Switzerland", ShipAddress = "Starenweg 5" },
+        new OrdersDetails() { OrderID = 10256, CustomerID = "WELLI", Freight = 13.97, ShipCity = "Resende", OrderDate = new DateTime(1996, 7, 15), ShipName = "Wellington Importadora", ShipCountry = "Brazil", ShipAddress = "Rua do Mercado, 12" },
+        new OrdersDetails() { OrderID = 10257, CustomerID = "HILAA", Freight = 81.91, ShipCity = "San Cristóbal", OrderDate = new DateTime(1996, 7, 16), ShipName = "HILARION-Abastos", ShipCountry = "Venezuela", ShipAddress = "Carrera 22 con Ave. Carlos Soublette #8-35" },
+        new OrdersDetails() { OrderID = 10258, CustomerID = "ERNSH", Freight = 140.51, ShipCity = "Graz", OrderDate = new DateTime(1996, 7, 17), ShipName = "Ernst Handel", ShipCountry = "Austria", ShipAddress = "Kirchgasse 6" },
+        new OrdersDetails() { OrderID = 10259, CustomerID = "CENTC", Freight = 3.25, ShipCity = "México D.F.", OrderDate = new DateTime(1996, 7, 18), ShipName = "Centro comercial Moctezuma", ShipCountry = "Mexico", ShipAddress = "Sierras de Granada 9993" },
+        new OrdersDetails() { OrderID = 10260, CustomerID = "OTTIK", Freight = 55.09, ShipCity = "Köln", OrderDate = new DateTime(1996, 7, 19), ShipName = "Ottilies Käseladen", ShipCountry = "Germany", ShipAddress = "Mehrheimerstr. 369" },
+        new OrdersDetails() { OrderID = 10261, CustomerID = "QUEDE", Freight = 3.05, ShipCity = "Rio de Janeiro", OrderDate = new DateTime(1996, 7, 19), ShipName = "Que Delícia", ShipCountry = "Brazil", ShipAddress = "Rua da Panificadora, 12" },
+        new OrdersDetails() { OrderID = 10262, CustomerID = "RATTC", Freight = 48.29, ShipCity = "Albuquerque", OrderDate = new DateTime(1996, 7, 22), ShipName = "Rattlesnake Canyon Grocery", ShipCountry = "USA", ShipAddress = "2817 Milton Dr." }
     };
 
     public class OrdersDetails
     {
-        [Required]
-        public int? OrderID { get; set; }
-        [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "Order ID must be greater than 0")]
+        public int OrderID { get; set; }
+        [StringLength(5, MinimumLength = 3, ErrorMessage = "CustomerID must be between 3 and 5 characters long.")]
         public string CustomerID { get; set; }
-        [Required]
+        [Range(0, double.MaxValue, ErrorMessage = "Freight must be a positive value")]
         public double? Freight { get; set; }
         [Required]
         public string ShipCity { get; set; }
@@ -137,4 +110,40 @@
         [Required]
         public string ShipAddress { get; set; }
     }
+
+    public class City
+    {
+        public string ShipCity { get; set; }
+    }
+    List<City> CityName = new List<City>
+    {
+        new City() { ShipCity= "Reims" },
+        new City() { ShipCity= "Münster" },
+        new City() { ShipCity = "Rio de Janeiro" },
+        new City() { ShipCity = "Lyon" },
+        new City() { ShipCity = "Charleroi" },
+        new City() { ShipCity = "Genève" },
+        new City() { ShipCity = "Resende" },
+        new City() { ShipCity = "San Cristóbal" },
+        new City() { ShipCity = "Graz" },
+        new City() { ShipCity = "México D.F." },
+        new City() { ShipCity = "Köln" },
+        new City() { ShipCity = "Albuquerque" },
+    };
+    public class Country
+    {
+        public string ShipCountry { get; set; }
+    }
+    List<Country> CountryName = new List<Country>
+    {
+        new Country() { ShipCountry= "France"},
+        new Country() { ShipCountry= "Brazil"},
+        new Country() { ShipCountry= "Germany"},
+        new Country() { ShipCountry= "Belgium"},
+        new Country() { ShipCountry= "Austria"},
+        new Country() { ShipCountry= "Switzerland"},
+        new Country() { ShipCountry= "Venezuela"},
+        new Country() { ShipCountry= "Mexico"},
+        new Country() { ShipCountry= "USA"},
+    };
 }
