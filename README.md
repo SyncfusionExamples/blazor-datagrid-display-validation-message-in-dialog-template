@@ -2,7 +2,7 @@
 
 ## Overview
 
-This sample demonstrates how to display validation messages in the Syncfusion Blazor DataGrid add and edit dialog when a model property participates in validation but is not explicitly defined as a GridColumn. In dialog template editing scenarios, developers often include custom form fields or hidden model properties that require validation. This sample shows how validation feedback is surfaced within the dialog interface so users can correct invalid input before completing Create, Update, or Edit operations.
+This sample demonstrates how to display validation messages in the Syncfusion [Blazor DataGrid](https://www.syncfusion.com/blazor-components/blazor-datagrid) add and edit dialog when a model property participates in validation but is not explicitly defined as a GridColumn. In dialog template editing scenarios, developers often include custom form fields or hidden model properties that require validation. This sample shows how validation feedback is surfaced within the dialog interface so users can correct invalid input before completing Create, Update, or Edit operations.
 
 ## Key Features
 
